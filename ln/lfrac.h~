@@ -50,16 +50,6 @@ int lfrac_checknull(lfrac n);
  */
 void lfrac_free(lfrac* n);
 /*
- * 作用:复制b的值给a
- * 参数:
- *	b:原lfrac
- *	a:目标lfrac,如果传入NULL则返回新创建的b的副本
- * 返回值:
- * 	成功:如果a非NULL,返回a,否则返回新创建的b的副本
- * 	失败:返回NULL
- */
-lfrac lfrac_copy(lfrac a,lfrac b);
-/*
  * 作用:化简分数lfrac
  * 参数:
  *	n:要化简的分数

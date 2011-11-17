@@ -233,11 +233,4 @@ lfrac lfrac_simplify(lfrac n,res_type restype)
 		fprintf(stderr,"[%s %d] %s error,reason: ln_divide fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return NULL;	
 	}
-	if(ln_divide(m->dtor,gcd,0,round_res,firstln)==NULL)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln_divide fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return NULL;	
-	}
-	m->ntor->sign=sign;
-	return m;
 }
