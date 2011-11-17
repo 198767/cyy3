@@ -12,6 +12,6 @@ int main(int argc, char** argv)
 	//ln a=ln_init_str("919191919190");
 	ln c=ln_divide(a,b,1000,trunc_res,newln);
 	puts(ln2str(c));
-
+  system("pause");
 	return 0;
 }

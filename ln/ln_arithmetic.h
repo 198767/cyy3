@@ -47,7 +47,7 @@ ln ln_add_int(ln a,int b,res_type restype);
  * 	成功:返回相加结果
  * 	失败:NULL
  */
-ln ln_minus(ln a,ln b,res_type restype);
+ln ln_sub(ln a,ln b,res_type restype);
 
 /*
  * 作用:把i乘以j
