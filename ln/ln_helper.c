@@ -851,7 +851,7 @@ ln ln_fix(ln n,int precision,divide_mode mode)
 	ln_stripleadingzero(n);
 	//去除后置0
 	ln_adjustpower(n,ln_endingzeronum(n));
-	//去除前置0
+	//由于上一个函数可能导致前置0,再次去除
 	ln_stripleadingzero(n);
 
 	//获取最低节点的小数点位数
