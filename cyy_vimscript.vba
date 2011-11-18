@@ -202,15 +202,19 @@ endfunction
 
 
 plugin/cyy_vimscript/settings.vim	[[[1
-23
+27
 "备份文件
 set backup
 "使用文件类型插件
 filetype plugin on
 "查找
 map <space> /
+"设置文件编码
+set fenc=utf8
 "设置编码
-set encoding=utf8
+set enc=utf8
+"设置写入文件编码
+set fencs=utf8
 "递增查询
 set incsearch
 "设置页号
