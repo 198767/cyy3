@@ -19,17 +19,17 @@ lfrac lfrac_creat(ln ntor,ln dtor,res_type restype)
 	if(ln_checknull(ntor)!=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: ln_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
+		return NULL;	
 	}
 	if(ln_checknull(dtor)!=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: ln_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
+		return NULL;	
 	}
 	if(restype !=copy && restype !=deepcopy)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: invalid restype\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
+		return NULL;	
 	}
 
 	//去除前置0
@@ -116,9 +116,9 @@ void lfrac_free(lfrac* n)
 		return;	
 	}
 	//释放分子
-	ln_free(&(n->ntor))
+	ln_free(&((*n)->ntor));
 	//释放分母
-	ln_free(&(n->dtor))
+	ln_free(&((*n)->dtor));
 	*n=NULL;
 	return;
 }
@@ -157,12 +157,12 @@ lfrac lfrac_copy(lfrac a,lfrac b)
 			return NULL;
 		}
 
-		if(ln_copy(a->ntor,b->ntor,firstln)==NULL)
+		if(ln_copy(a->ntor,b->ntor)==NULL)
 		{
 			fprintf(stderr,"[%s %d] %s error,reason: ln_copy fail\n",__FILE__,__LINE__,__FUNCTION__);
 			return NULL;
 		}
-		if(ln_copy(a->dtor,b->dtor,firstln)==NULL)
+		if(ln_copy(a->dtor,b->dtor)==NULL)
 		{
 			fprintf(stderr,"[%s %d] %s error,reason: ln_copy fail\n",__FILE__,__LINE__,__FUNCTION__);
 			return NULL;
@@ -211,7 +211,7 @@ lfrac lfrac_simplify(lfrac n,res_type restype)
 		m->dtor->power=0;
 	else
 	{
-		m->dtor->power=-m->ntor;
+		m->dtor->power=-m->ntor->power;
 		m->ntor->power=0;
 	}
 	if(m->ntor->sign==m->dtor->sign)

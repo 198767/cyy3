@@ -1,7 +1,7 @@
 /*
  *	该库里面包含数论相关函数
  */
-#include "lfrac.h"
+#include "ln_numbertheory.h"
 /*
  * 作用:求出a和b的最大公因素
  * 参数:
@@ -17,12 +17,12 @@ ln ln_gcd(ln a,ln b)
 	if(ln_checknull(a)!=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: ln_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
+		return NULL;	
 	}
 	if(ln_checknull(b)!=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: ln_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
+		return NULL;	
 	}
 	//a,b必须是正整数
 	if(a->sign==-1 ||  (a->power<0 && ln_endingzeronum(a)+a->power<0) )
@@ -35,7 +35,7 @@ ln ln_gcd(ln a,ln b)
 		fprintf(stderr,"[%s %d] %s error,reason: b isn't positive integer\b",__FILE__,__LINE__,__FUNCTION__);
 		return NULL;	
 	}
-	
+
 	//复制a,b
 	m=ln_copy(NULL,a);
 	if(m==NULL)
@@ -98,4 +98,3 @@ ln ln_gcd(ln a,ln b)
 		ln_free(&q);
 	return m;
 }
-

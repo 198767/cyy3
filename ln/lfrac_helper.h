@@ -11,6 +11,7 @@
 #include <errno.h>
 #include "ln.h"
 #include "ln_helper.h"
+#include "ln_numbertheory.h"
 
 struct _lfrac
 {
@@ -69,4 +70,12 @@ lfrac lfrac_copy(lfrac a,lfrac b);
  * 	失败:NULL
  */
 lfrac lfrac_simplify(lfrac n,res_type restype);
+/*
+ * 作用:打印分数lfrac
+ * 参数:
+ *	n:要输出的分数
+ * 返回值:
+ * 	无
+ */
+void lfrac_output(lfrac n)
 #endif
