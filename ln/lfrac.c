@@ -241,3 +241,37 @@ lfrac lfrac_simplify(lfrac n,res_type restype)
 	m->ntor->sign=sign;
 	return m;
 }
+/*
+ * 作用:打印分数lfrac
+ * 参数:
+ *	n:要输出的分数
+ * 返回值:
+ * 	无
+ */
+void lfrac_output(lfrac n)
+{
+	char *p;
+	//检测参数
+	if(lfrac_checknull(n)!=0)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: lfrac_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;	
+	}
+	p=ln2str(n->ntor);
+	if(!p)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;			
+	}
+	printf("ntor: %s",p);
+	free(p);
+	p=ln2str(n->dtor);
+	if(!p)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;			
+	}
+	printf("dtor: %s",p);
+	free(p);
+	return;
+}
