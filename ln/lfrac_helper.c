@@ -1,7 +1,7 @@
 /*
  *	该库里面包含ln的构造及释放的函数，以及转换函数等辅助函数
  */
-#include "lfrac.h"
+#include "lfrac_helper.h"
 /*
  * 作用:ntor和dtor作为分子和分母创建lfrac
  * 参数:
@@ -263,7 +263,7 @@ void lfrac_output(lfrac n)
 		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;			
 	}
-	printf("ntor: %s",p);
+	printf("ntor: %s\n",p);
 	free(p);
 	p=ln2str(n->dtor);
 	if(!p)
@@ -271,7 +271,7 @@ void lfrac_output(lfrac n)
 		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;			
 	}
-	printf("dtor: %s",p);
+	printf("dtor: %s\n",p);
 	free(p);
 	return;
 }

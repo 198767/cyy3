@@ -77,5 +77,5 @@ lfrac lfrac_simplify(lfrac n,res_type restype);
  * 返回值:
  * 	无
  */
-void lfrac_output(lfrac n)
+void lfrac_output(lfrac n);
 #endif
