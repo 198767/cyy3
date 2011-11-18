@@ -608,6 +608,7 @@ ln ln_divide(ln a,ln b,int precision,divide_mode mode,res_type restype)
 		ln_adjustpower(x,(x_cellnum-y_cellnum)*DIGIT_NUM);
 	if(y_cellnum<x_cellnum)
 		ln_adjustpower(y,(y_cellnum-x_cellnum)*DIGIT_NUM);
+	ln_info(x);	
 	//算出初始精度
 	inc_prec=ln_pointnum(x,x->lsd)-DIGIT_NUM+y->power;
 

@@ -13,8 +13,8 @@ int main(int argc, char** argv)
 	//lfrac_output(c);
 	//c=lfrac_simplify(c,firstln);	
 	//lfrac_output(c);
-		ln c=ln_gcd(a,b);
-	//	ln c=ln_divide(a,b,0,trunc_res,newln);
+	//	ln c=ln_gcd(a,b);
+		ln c=ln_divide(a,b,0,trunc_res,newln);
 ln_output(c);
 	return 0;
 }

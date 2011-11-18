@@ -67,7 +67,6 @@ printf("n=%s\n",ln2str(n));
 ln_info(m);
 ln_info(n);
 		q=ln_divide(m,n,0,trunc_res,newln);
-PUT_LINE;
 		if(q==NULL)
 		{
 			ln_free(&m);

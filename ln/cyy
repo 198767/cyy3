@@ -1,284 +1,995 @@
-ln_helper.c: (in function ln_creat)
-ln_helper.c:37:12: Null storage n->lsd derivable from parameter ln_free (&n)
-  A possibly null pointer is reachable from a parameter or global variable that
-  is not declared using a /*@null@*/ annotation. (Use -nullstate to inhibit
-  warning)
-   ln_helper.c:26:9: Storage n->lsd becomes null
-ln_helper.c:37:12: Null storage n->msd derivable from parameter ln_free (&n)
-   ln_helper.c:27:9: Storage n->msd becomes null
-ln_helper.c:38:16: Fresh storage n not released before return
-  A memory leak has been detected. Storage allocated locally is not released
-  before the last reference to it is lost. (Use -mustfreefresh to inhibit
-  warning)
-   ln_helper.c:19:42: Fresh storage n created
-ln_helper.c:44:4: Kept storage p assigned to implicitly only: p->hcell = p
-  storage is transferred to a non-temporary reference after being passed as
-  keep parameter. The storage may be released or new aliases created. (Use
-  -kepttrans to inhibit warning)
-   ln_helper.c:43:4: Storage p becomes kept
-ln_helper.c:45:4: Kept storage p assigned to implicitly only: p->lcell = p
-   ln_helper.c:43:4: Storage p becomes kept
-ln_helper.c:52:4: Kept storage p assigned to implicitly only: n->lsd->lcell = p
-   ln_helper.c:51:4: Storage p becomes kept
-ln_helper.c:53:4: Kept storage p assigned to implicitly only: n->lsd = p
-   ln_helper.c:51:4: Storage p becomes kept
-ln_helper.c:57:9: Storage n->lsd reachable from return value is kept (should be
-                     implicitly only)
-  Storage derivable from a parameter does not match the alias kind expected for
-  the formal parameter. (Use -compmempass to inhibit warning)
-   ln_helper.c:56:2: Storage n->lsd becomes kept
-ln_helper.c:57:9: Possibly null storage n->lsd derivable from return value: n
-  Function returns a possibly null pointer, but is not declared using
-  /*@null@*/ annotation of result.  If function may return NULL, add /*@null@*/
-  annotation to the return value declaration. (Use -nullret to inhibit warning)
-   ln_helper.c:26:9: Storage n->lsd may become null
-ln_helper.c:57:9: Returned storage *(n->lsd) contains 3 undefined fields:
-                     num, lcell, hcell
-  Storage derivable from a parameter, return value or global is not defined.
-  Use /*@out@*/ to denote passed or returned storage which need not be defined.
-  (Use -compdef to inhibit warning)
-ln_helper.c:57:9: Possibly null storage n->msd derivable from return value: n
-   ln_helper.c:56:9: Storage n->msd may become null
-ln_helper.c: (in function ln_free)
-ln_helper.c:89:9: Only storage p->lcell->lcell (type struct _cell *) derived
-    from released storage is not released (memory leak): p->lcell
-  A storage leak due to incomplete deallocation of a structure or deep pointer
-  is suspected. Unshared storage that is reachable from a reference that is
-  being deallocated has not yet been deallocated. Splint assumes when an object
-  is passed as an out only void pointer that the outer object will be
-  deallocated, but the inner objects will not. (Use -compdestroy to inhibit
-  warning)
-ln_helper.c:89:9: Only storage p->lcell->hcell (type struct _cell *) derived
-    from released storage is not released (memory leak): p->lcell
-ln_helper.c:90:3: Storage p->lcell is released in one path, but live in
-                     another.
-  The state of a variable is different depending on which branch is taken. This
-  means no annotation can sensibly be applied to the storage. (Use -branchstate
-  to inhibit warning)
-   ln_helper.c:89:9: Storage p->lcell released
-ln_helper.c:93:7: Unqualified storage *n passed as only param: free (*n)
-  Unqualified storage is transferred in an inconsistent way. (Use
-  -unqualifiedtrans to inhibit warning)
-ln_helper.c:95:9: Function returns with null storage derivable from parameter
-                     *n
-   ln_helper.c:94:5: Storage *n becomes null
-ln_helper.c: (in function ln_setval)
-ln_helper.c:214:11: Null storage returned as non-null: NULL
-ln_helper.c:226:8: Test expression for while not boolean, type int: 1
-  Test expression type is not boolean or int. (Use -predboolint to inhibit
-  warning)
-ln_helper.c:237:13: Null storage returned as non-null: NULL
-ln_helper.c:244:4: Implicitly only storage n->msd (type struct _cell *) not
-                      released before assignment (p aliases n->lsd): n->msd = p
-  A memory leak has been detected. Only-qualified storage is not released
-  before the last reference to it is lost. (Use -mustfreeonly to inhibit
-  warning)
-ln_helper.c:248:9: Implicitly temp storage n returned as implicitly only: n
-  Temp storage (associated with a formal parameter) is transferred to a
-  non-temporary reference. The storage may be released or new aliases created.
-  (Use -temptrans to inhibit warning)
-ln_helper.c: (in function ln_addcell)
-ln_helper.c:264:77: Return value (type int) ignored: fflush(stdout)
-  Result returned by function call is not used. If this is intended, can cast
-  result to (void) to eliminate message. (Use -retvalint to inhibit warning)
-ln_helper.c:269:10: Null storage returned as non-null: NULL
-ln_helper.c:271:77: Return value (type int) ignored: fflush(stdout)
-ln_helper.c:275:10: Null storage returned as non-null: NULL
-ln_helper.c:278:77: Return value (type int) ignored: fflush(stdout)
-ln_helper.c:280:8: Test expression for while not boolean, type int: inc_num
-ln_helper.c:282:77: Return value (type int) ignored: fflush(stdout)
-ln_helper.c:287:11: Null storage returned as non-null: NULL
-ln_helper.c:292:3: Kept storage p assigned to implicitly only:
-                      n->lsd->lcell = p
-   ln_helper.c:291:3: Storage p becomes kept
-ln_helper.c:295:2: Storage n->lsd is kept in one path, but live in another.
-   ln_helper.c:289:3: Storage n->lsd becomes kept
-ln_helper.c:295:2: Clauses exit with n->lsd referencing kept storage in while
-                      body, implicitly only storage if loop is not taken
-   ln_helper.c:289:3: Storage n->lsd becomes kept
-ln_helper.c:296:9: Implicitly temp storage n returned as implicitly only: n
-ln_helper.c:296:9: Returned storage *n contains 1 undefined field: lsd
-ln_helper.c: (in function ln_copy)
-ln_helper.c:395:10: Null storage returned as non-null: NULL
-ln_helper.c:402:10: Null storage returned as non-null: NULL
-ln_helper.c:411:11: Null storage returned as non-null: NULL
-ln_helper.c:419:11: Null storage returned as non-null: NULL
-ln_helper.c:426:11: Null storage returned as non-null: NULL
-ln_helper.c:434:12: Null storage returned as non-null: NULL
-ln_helper.c:449:2: Implicitly only storage a->msd (type struct _cell *) not
-                      released before assignment: a->msd = p->lcell
-ln_helper.c:450:9: Implicitly temp storage a returned as implicitly only: a
-ln_helper.c:450:9: Storage a->lsd->lcell reachable from return value is kept
-                      (should be implicitly only)
-   ln_helper.c:449:2: Storage a->lsd->lcell becomes kept
-ln_helper.c: (in function ln_cmp)
-ln_helper.c:511:3: Return value (type ln) ignored: ln_adjustpower(a...
-  Result returned by function call is not used. If this is intended, can cast
-  result to (void) to eliminate message. (Use -retvalother to inhibit warning)
-ln_helper.c:513:3: Return value (type ln) ignored: ln_adjustpower(b...
-ln_helper.c:518:8: Test expression for while not boolean, type int: 1
-ln_helper.c: (in function ln_cmp_int)
-ln_helper.c:607:14: Null storage passed as non-null param:
-                       ln_setval (NULL, ...)
-  A possibly null pointer is passed as a parameter corresponding to a formal
-  parameter with no /*@null@*/ annotation.  If NULL may be used for this
-  parameter, add a /*@null@*/ annotation to the function parameter declaration.
-  (Use -nullpass to inhibit warning)
-ln_helper.c:615:13: Fresh storage c not released before return
-   ln_helper.c:607:2: Fresh storage c created
-ln_helper.c: (in function ln_checkstr)
-ln_helper.c:643:8: Test expression for while not boolean, type char: *str
-  Test expression type is not boolean. (Use -predboolothers to inhibit warning)
-ln_helper.c: (in function ln_stripleadingzero)
-ln_helper.c:692:9: Storage n->msd reachable from parameter is kept (should be
-                      implicitly only)
-   ln_helper.c:691:2: Storage n->msd becomes kept
-ln_helper.c: (in function ln_endingzeronum)
-ln_helper.c:721:8: Test expression for while not boolean, type int: 1
-ln_helper.c:737:9: Unreachable code: return i
-  This code will never be reached on any possible execution. (Use -unreachable
-  to inhibit warning)
-ln_helper.c: (in function ln_adjustpower)
-ln_helper.c:760:10: Null storage returned as non-null: NULL
-ln_helper.c:768:10: Implicitly temp storage n returned as implicitly only: n
-ln_helper.c:772:10: Implicitly temp storage n returned as implicitly only: n
-ln_helper.c:785:9: Test expression for while not boolean, type int: 1
-ln_helper.c:796:80: Return value (type int) ignored: fflush(stdout)
-ln_helper.c:800:15: Null storage returned as non-null: NULL
-ln_helper.c:804:6: Implicitly only storage n->msd (type struct _cell *) not
-                      released before assignment: n->msd = p->hcell
-ln_helper.c:805:5: Storage n->lsd->hcell is kept in one path, but live in
-                      another.
-   ln_helper.c:804:6: Storage n->lsd->hcell becomes kept
-ln_helper.c:805:5: Clauses exit with p->hcell referencing kept storage in true
-                      branch, implicitly only storage in continuation
-   ln_helper.c:804:6: Storage p->hcell becomes kept
-ln_helper.c:825:13: Null storage returned as non-null: NULL
-ln_helper.c:830:3: Clauses exit with p referencing implicitly only storage in
-                      while body, local storage if loop is not taken
-   ln_helper.c:816:5: Storage p becomes implicitly only (through alias n->lsd)
-ln_helper.c:830:3: Storage p->lcell is kept in one path, but live in another.
-   ln_helper.c:816:5: Storage p->lcell becomes kept
-ln_helper.c:839:11: Null storage returned as non-null: NULL
-ln_helper.c:845:11: Null storage returned as non-null: NULL
-ln_helper.c:861:11: Implicitly temp storage n returned as implicitly only: n
-ln_helper.c:861:11: Storage n->lsd reachable from return value is kept (should
-                       be implicitly only)
-   ln_helper.c:857:3: Storage n->lsd becomes kept
-ln_helper.c:867:9: Test expression for while not boolean, type int: 1
-ln_helper.c:878:2: Clauses exit with n->lsd referencing implicitly only storage
-                      in true branch, kept storage in false branch
-   ln_helper.c:857:3: Storage n->lsd becomes kept
-ln_helper.c:878:2: Storage n->lsd is kept in one path, but live in another.
-   ln_helper.c:857:3: Storage n->lsd becomes kept
-ln_helper.c:879:9: Implicitly temp storage n returned as implicitly only: n
-ln_helper.c:879:9: Storage n->lsd reachable from return value is unqualified
-                      (should be implicitly only)
-   ln_helper.c:857:3: Storage n->lsd becomes kept
-ln_helper.c: (in function str2ln)
-ln_helper.c:904:11: Null storage returned as non-null: NULL
-ln_helper.c:912:11: Null storage returned as non-null: NULL
-ln_helper.c:920:10: Null storage returned as non-null: NULL
-ln_helper.c:985:12: Incompatible types for * (char, int):
-                       (*lastdigit - '0') * i
-  To make char and int types equivalent, use +charint.
-ln_helper.c:997:15: Null storage returned as non-null: NULL
-ln_helper.c:1012:2: Implicitly only storage n->msd (type struct _cell *) not
-    released before assignment (p aliases n->lsd): n->msd = p
-ln_helper.c:1013:9: Implicitly temp storage n returned as implicitly only: n
-ln_helper.c:1013:9: Storage n->lsd reachable from return value is kept (should
-                       be implicitly only)
-   ln_helper.c:1012:2: Storage n->lsd becomes kept
-ln_helper.c: (in function ln2str)
-ln_helper.c:1027:13: Variable errno shadows outer declaration
-  An outer declaration is shadowed by the local declaration. (Use -shadow to
-  inhibit warning)
-   ln.h:41:12: Previous declaration of errno: int
-ln_helper.c:1027:19: Declaration using extern inside function scope: int errno
-  An extern declaration is used inside a function scope. (Use -nestedextern to
-  inhibit warning)
-ln_helper.c:1040:10: Null storage returned as non-null: NULL
-ln_helper.c:1049:10: Null storage returned as non-null: NULL
-ln_helper.c:1056:10: Null storage returned as non-null: NULL
-ln_helper.c:1062:7: Unrecognized identifier: strdup
-  Identifier used in code has not been declared. (Use -unrecog to inhibit
-  warning)
-ln_helper.c:1066:11: Null storage returned as non-null: NULL
-ln_helper.c:1076:21: Function malloc expects arg 1 to be size_t gets int:
-                        cellnum * 4 + n->power + 10
-  To allow arbitrary integral types to match any integral type, use
-  +matchanyintegral.
-ln_helper.c:1080:11: Null storage returned as non-null: NULL
-ln_helper.c:1091:9: Test expression for while not boolean, type int: i
-ln_helper.c:1095:9: Incompatible types for + (int, char):
-                       (a->num / i) % 10 + '0'
-  A character constant is used as an int. Use +charintliteral to allow
-  character constants to be used as ints.  (This is safe since the actual type
-  of a char constant is int.)
-ln_helper.c:1103:10: Test expression for while not boolean, type int: i
-ln_helper.c:1105:10: Incompatible types for + (int, char):
-                        (a->num / i) % 10 + '0'
-ln_helper.c:1120:11: Null storage returned as non-null: NULL
-ln_helper.c:1133:21: Function malloc expects arg 1 to be size_t gets int: size
-ln_helper.c:1137:11: Null storage returned as non-null: NULL
-ln_helper.c:1146:9: Incompatible types for + (int, char):
-                       (a->num / i) % 10 + '0'
-ln_helper.c:1162:9: Incompatible types for + (int, char):
-                       (a->num / i) % 10 + '0'
-ln_helper.c:1179:6: Value *p used before definition
-  An rvalue is used that may not be initialized to a value on some execution
-  path. (Use -usedef to inhibit warning)
-ln_helper.c:1183:2: Variable str is dependent in true branch, but independent
-                       in false branch.
-   ln_helper.c:1183:2: in true branch:
-   ln_helper.c:1083:3: Storage str becomes dependent
-   ln_helper.c:1183:2: in false branch:
-   ln_helper.c:1133:3: Fresh storage str created
-ln_helper.c:1183:2: Variable p is dependent in false branch, but independent in
-                       true branch.
-   ln_helper.c:1183:2: in false branch:
-   ln_helper.c:1139:3: Storage p becomes dependent
-   ln_helper.c:1183:2: in true branch:
-   ln_helper.c:1083:3: Storage p becomes owned
-ln_helper.c: (in function ln_output)
-ln_helper.c:1203:2: Return value (type int) ignored: puts(p)
-ln_helper.h:20:14: Function exported but not used outside ln_helper: ln_creat
-  A declaration is exported, but not used outside this module. Declaration can
-  use static qualifier. (Use -exportlocal to inhibit warning)
-   ln_helper.c:58:1: Definition of ln_creat
-ln_helper.h:29:6: Function exported but not used outside ln_helper: ln_free
-   ln_helper.c:96:1: Definition of ln_free
-ln_helper.h:39:5: Function exported but not used outside ln_helper: power10
-   ln_helper.c:126:1: Definition of power10
-ln_helper.h:48:5: Function exported but not used outside ln_helper:
-                     ln_checknull
-   ln_helper.c:162:1: Definition of ln_checknull
-ln_helper.h:68:4: Function exported but not used outside ln_helper: ln_setval
-   ln_helper.c:249:1: Definition of ln_setval
-ln_helper.h:80:4: Function exported but not used outside ln_helper: ln_addcell
-   ln_helper.c:297:1: Definition of ln_addcell
-ln_helper.h:92:5: Function exported but not used outside ln_helper:
-                     ln_untilcellnum
-   ln_helper.c:328:1: Definition of ln_untilcellnum
-ln_helper.h:107:5: Function exported but not used outside ln_helper:
-                      ln_digitnum
-   ln_helper.c:374:1: Definition of ln_digitnum
-ln_helper.h:131:5: Function exported but not used outside ln_helper: ln_cmp
-   ln_helper.c:542:1: Definition of ln_cmp
-ln_helper.h:158:5: Function exported but not used outside ln_helper: ln_cmp_int
-   ln_helper.c:616:1: Definition of ln_cmp_int
-ln_helper.h:168:5: Function exported but not used outside ln_helper:
-                      ln_checkstr
-   ln_helper.c:671:1: Definition of ln_checkstr
-ln_helper.h:177:6: Function exported but not used outside ln_helper:
-                      ln_stripleadingzero
-   ln_helper.c:693:1: Definition of ln_stripleadingzero
-ln_helper.h:188:5: Function exported but not used outside ln_helper:
-                      ln_endingzeronum
-   ln_helper.c:738:1: Definition of ln_endingzeronum
-ln_helper.h:199:4: Function exported but not used outside ln_helper:
-                      ln_adjustpower
-   ln_helper.c:880:1: Definition of ln_adjustpower
-ln_helper.h:221:7: Function exported but not used outside ln_helper: ln2str
-   ln_helper.c:1185:1: Definition of ln2str
-
+m=100
+n=55
+q=1
+q=-55
+m=155
+m=55
+n=155
+q=0
+q=0
+m=55
+m=155
+n=55
+q=2
+q=-110
+m=265
+m=55
+n=265
+q=0
+q=0
+m=55
+m=265
+n=55
+q=4
+q=-220
+m=485
+m=55
+n=485
+q=0
+q=0
+m=55
+m=485
+n=55
+q=8
+q=-440
+m=925
+m=55
+n=925
+q=0
+q=0
+m=55
+m=925
+n=55
+q=16
+q=-880
+m=1805
+m=55
+n=1805
+q=0
+q=0
+m=55
+m=1805
+n=55
+q=32
+q=-1760
+m=3565
+m=55
+n=3565
+q=0
+q=0
+m=55
+m=3565
+n=55
+q=64
+q=-3520
+m=7085
+m=55
+n=7085
+q=0
+q=0
+m=55
+m=7085
+n=55
+q=128
+q=-7040
+m=14125
+m=55
+n=14125
+q=0
+q=0
+m=55
+m=14125
+n=55
+q=256
+q=-14080
+m=28205
+m=55
+n=28205
+q=0
+q=0
+m=55
+m=28205
+n=55
+q=512
+q=-28160
+m=56365
+m=55
+n=56365
+q=0
+q=0
+m=55
+m=56365
+n=55
+q=1024
+q=-56320
+m=112685
+m=55
+n=112685
+q=0
+q=0
+m=55
+m=112685
+n=55
+q=2048
+q=-112640
+m=225325
+m=55
+n=225325
+q=0
+q=0
+m=55
+m=225325
+n=55
+q=4096
+q=-225280
+m=450605
+m=55
+n=450605
+q=0
+q=0
+m=55
+m=450605
+n=55
+q=8192
+q=-450560
+m=901165
+m=55
+n=901165
+q=0
+q=0
+m=55
+m=901165
+n=55
+q=16384
+q=-901120
+m=1802285
+m=55
+n=1802285
+q=0
+q=0
+m=55
+m=1802285
+n=55
+q=32768
+q=-1802240
+m=3604525
+m=55
+n=3604525
+q=0
+q=0
+m=55
+m=3604525
+n=55
+q=65536
+q=-3604480
+m=7209005
+m=55
+n=7209005
+q=0
+q=0
+m=55
+m=7209005
+n=55
+q=131072
+q=-7208960
+m=14417965
+m=55
+n=14417965
+q=0
+q=0
+m=55
+m=14417965
+n=55
+q=262144
+q=-14417920
+m=28835885
+m=55
+n=28835885
+q=0
+q=0
+m=55
+m=28835885
+n=55
+q=524288
+q=-28835840
+m=57671725
+m=55
+n=57671725
+q=0
+q=0
+m=55
+m=57671725
+n=55
+q=1048576
+q=-57671680
+m=115343405
+m=55
+n=115343405
+q=0
+q=0
+m=55
+m=115343405
+n=55
+q=2097152
+q=-115343360
+m=230686765
+m=55
+n=230686765
+q=0
+q=0
+m=55
+m=230686765
+n=55
+q=4194304
+q=-230686720
+m=461373485
+m=55
+n=461373485
+q=0
+q=0
+m=55
+m=461373485
+n=55
+q=8388608
+q=-461373440
+m=922746925
+m=55
+n=922746925
+q=0
+q=0
+m=55
+m=922746925
+n=55
+q=16777216
+q=-922746880
+m=1845493805
+m=55
+n=1845493805
+q=0
+q=0
+m=55
+m=1845493805
+n=55
+q=33554432
+q=-1845493760
+m=3690987565
+m=55
+n=3690987565
+q=0
+q=0
+m=55
+m=3690987565
+n=55
+q=67108864
+q=-3690987520
+m=7381975085
+m=55
+n=7381975085
+q=0
+q=0
+m=55
+m=7381975085
+n=55
+q=134217728
+q=-7381975040
+m=14763950125
+m=55
+n=14763950125
+q=0
+q=0
+m=55
+m=14763950125
+n=55
+q=268435456
+q=-14763950080
+m=29527900205
+m=55
+n=29527900205
+q=0
+q=0
+m=55
+m=29527900205
+n=55
+q=536870912
+q=-29527900160
+m=59055800365
+m=55
+n=59055800365
+q=0
+q=0
+m=55
+m=59055800365
+n=55
+q=1073741824
+q=-59055800320
+m=118111600685
+m=55
+n=118111600685
+q=0
+q=0
+m=55
+m=118111600685
+n=55
+q=2147483648
+q=-118111600640
+m=236223201325
+m=55
+n=236223201325
+q=0
+q=0
+m=55
+m=236223201325
+n=55
+q=4294967296
+q=-236223201280
+m=472446402605
+m=55
+n=472446402605
+q=0
+q=0
+m=55
+m=472446402605
+n=55
+q=8589934592
+q=-472446402560
+m=944892805165
+m=55
+n=944892805165
+q=0
+q=0
+m=55
+m=944892805165
+n=55
+q=17179869184
+q=-944892805120
+m=1889785610285
+m=55
+n=1889785610285
+q=0
+q=0
+m=55
+m=1889785610285
+n=55
+q=34359738368
+q=-1889785610240
+m=3779571220525
+m=55
+n=3779571220525
+q=0
+q=0
+m=55
+m=3779571220525
+n=55
+q=68719476736
+q=-3779571220480
+m=7559142441005
+m=55
+n=7559142441005
+q=0
+q=0
+m=55
+m=7559142441005
+n=55
+q=137438953472
+q=-7559142440960
+m=15118284881965
+m=55
+n=15118284881965
+q=0
+q=0
+m=55
+m=15118284881965
+n=55
+q=274877906944
+q=-15118284881920
+m=30236569763885
+m=55
+n=30236569763885
+q=0
+q=0
+m=55
+m=30236569763885
+n=55
+q=549755813888
+q=-30236569763840
+m=60473139527725
+m=55
+n=60473139527725
+q=0
+q=0
+m=55
+m=60473139527725
+n=55
+q=1099511627776
+q=-60473139527680
+m=120946279055405
+m=55
+n=120946279055405
+q=0
+q=0
+m=55
+m=120946279055405
+n=55
+q=2199023255552
+q=-120946279055360
+m=241892558110765
+m=55
+n=241892558110765
+q=0
+q=0
+m=55
+m=241892558110765
+n=55
+q=4398046511104
+q=-241892558110720
+m=483785116221485
+m=55
+n=483785116221485
+q=0
+q=0
+m=55
+m=483785116221485
+n=55
+q=8796093022208
+q=-483785116221440
+m=967570232442925
+m=55
+n=967570232442925
+q=0
+q=0
+m=55
+m=967570232442925
+n=55
+q=17592186044416
+q=-967570232442880
+m=1935140464885805
+m=55
+n=1935140464885805
+q=0
+q=0
+m=55
+m=1935140464885805
+n=55
+q=35184372088832
+q=-1935140464885760
+m=3870280929771565
+m=55
+n=3870280929771565
+q=0
+q=0
+m=55
+m=3870280929771565
+n=55
+q=70368744177664
+q=-3870280929771520
+m=7740561859543085
+m=55
+n=7740561859543085
+q=0
+q=0
+m=55
+m=7740561859543085
+n=55
+q=140737488355328
+q=-7740561859543040
+m=15481123719086125
+m=55
+n=15481123719086125
+q=0
+q=0
+m=55
+m=15481123719086125
+n=55
+q=281474976710656
+q=-15481123719086080
+m=30962247438172205
+m=55
+n=30962247438172205
+q=0
+q=0
+m=55
+m=30962247438172205
+n=55
+q=562949953421312
+q=-30962247438172160
+m=61924494876344365
+m=55
+n=61924494876344365
+q=0
+q=0
+m=55
+m=61924494876344365
+n=55
+q=1125899906842624
+q=-61924494876344320
+m=123848989752688685
+m=55
+n=123848989752688685
+q=0
+q=0
+m=55
+m=123848989752688685
+n=55
+q=2251799813685248
+q=-123848989752688640
+m=247697979505377325
+m=55
+n=247697979505377325
+q=0
+q=0
+m=55
+m=247697979505377325
+n=55
+q=4503599627370496
+q=-247697979505377280
+m=495395959010754605
+m=55
+n=495395959010754605
+q=0
+q=0
+m=55
+m=495395959010754605
+n=55
+q=9007199254740992
+q=-495395959010754560
+m=990791918021509165
+m=55
+n=990791918021509165
+q=0
+q=0
+m=55
+m=990791918021509165
+n=55
+q=18014398509481984
+q=-990791918021509120
+m=1981583836043018285
+m=55
+n=1981583836043018285
+q=0
+q=0
+m=55
+m=1981583836043018285
+n=55
+q=36028797018963968
+q=-1981583836043018240
+m=3963167672086036525
+m=55
+n=3963167672086036525
+q=0
+q=0
+m=55
+m=3963167672086036525
+n=55
+q=72057594037927936
+q=-3963167672086036480
+m=7926335344172073005
+m=55
+n=7926335344172073005
+q=0
+q=0
+m=55
+m=7926335344172073005
+n=55
+q=144115188075855872
+q=-7926335344172072960
+m=15852670688344145965
+m=55
+n=15852670688344145965
+q=0
+q=0
+m=55
+m=15852670688344145965
+n=55
+q=288230376151711744
+q=-15852670688344145920
+m=31705341376688291885
+m=55
+n=31705341376688291885
+q=0
+q=0
+m=55
+m=31705341376688291885
+n=55
+q=576460752303423488
+q=-31705341376688291840
+m=63410682753376583725
+m=55
+n=63410682753376583725
+q=0
+q=0
+m=55
+m=63410682753376583725
+n=55
+q=1152921504606846976
+q=-63410682753376583680
+m=126821365506753167405
+m=55
+n=126821365506753167405
+q=0
+q=0
+m=55
+m=126821365506753167405
+n=55
+q=2305843009213693952
+q=-126821365506753167360
+m=253642731013506334765
+m=55
+n=253642731013506334765
+q=0
+q=0
+m=55
+m=253642731013506334765
+n=55
+q=4611686018427387904
+q=-253642731013506334720
+m=507285462027012669485
+m=55
+n=507285462027012669485
+q=0
+q=0
+m=55
+m=507285462027012669485
+n=55
+q=9223372036854775808
+q=-507285462027012669440
+m=1014570924054025338925
+m=55
+n=1014570924054025338925
+q=0
+q=0
+m=55
+m=1014570924054025338925
+n=55
+q=18446744073709551616
+q=-1014570924054025338880
+m=2029141848108050677805
+m=55
+n=2029141848108050677805
+q=0
+q=0
+m=55
+m=2029141848108050677805
+n=55
+q=36893488147419103232
+q=-2029141848108050677760
+m=4058283696216101355565
+m=55
+n=4058283696216101355565
+q=0
+q=0
+m=55
+m=4058283696216101355565
+n=55
+q=73786976294838206464
+q=-4058283696216101355520
+m=8116567392432202711085
+m=55
+n=8116567392432202711085
+q=0
+q=0
+m=55
+m=8116567392432202711085
+n=55
+q=147573952589676412928
+q=-8116567392432202711040
+m=16233134784864405422125
+m=55
+n=16233134784864405422125
+q=0
+q=0
+m=55
+m=16233134784864405422125
+n=55
+q=295147905179352825856
+q=-16233134784864405422080
+m=32466269569728810844205
+m=55
+n=32466269569728810844205
+q=0
+q=0
+m=55
+m=32466269569728810844205
+n=55
+q=590295810358705651712
+q=-32466269569728810844160
+m=64932539139457621688365
+m=55
+n=64932539139457621688365
+q=0
+q=0
+m=55
+m=64932539139457621688365
+n=55
+q=1180591620717411303424
+q=-64932539139457621688320
+m=129865078278915243376685
+m=55
+n=129865078278915243376685
+q=0
+q=0
+m=55
+m=129865078278915243376685
+n=55
+q=2361183241434822606848
+q=-129865078278915243376640
+m=259730156557830486753325
+m=55
+n=259730156557830486753325
+q=0
+q=0
+m=55
+m=259730156557830486753325
+n=55
+q=4722366482869645213696
+q=-259730156557830486753280
+m=519460313115660973506605
+m=55
+n=519460313115660973506605
+q=0
+q=0
+m=55
+m=519460313115660973506605
+n=55
+q=9444732965739290427392
+q=-519460313115660973506560
+m=1038920626231321947013165
+m=55
+n=1038920626231321947013165
+q=0
+q=0
+m=55
+m=1038920626231321947013165
+n=55
+q=18889465931478580854784
+q=-1038920626231321947013120
+m=2077841252462643894026285
+m=55
+n=2077841252462643894026285
+q=0
+q=0
+m=55
+m=2077841252462643894026285
+n=55
+q=37778931862957161709568
+q=-2077841252462643894026240
+m=4155682504925287788052525
+m=55
+n=4155682504925287788052525
+q=0
+q=0
+m=55
+m=4155682504925287788052525
+n=55
+q=75557863725914323419136
+q=-4155682504925287788052480
+m=8311365009850575576105005
+m=55
+n=8311365009850575576105005
+q=0
+q=0
+m=55
+m=8311365009850575576105005
+n=55
+q=151115727451828646838272
+q=-8311365009850575576104960
+m=16622730019701151152209965
+m=55
+n=16622730019701151152209965
+q=0
+q=0
+m=55
+m=16622730019701151152209965
+n=55
+q=302231454903657293676544
+q=-16622730019701151152209920
+m=33245460039402302304419885
+m=55
+n=33245460039402302304419885
+q=0
+q=0
+m=55
+m=33245460039402302304419885
+n=55
+q=604462909807314587353088
+q=-33245460039402302304419840
+m=66490920078804604608839725
+m=55
+n=66490920078804604608839725
+q=0
+q=0
+m=55
+m=66490920078804604608839725
+n=55
+q=1208925819614629174706176
+q=-66490920078804604608839680
+m=132981840157609209217679405
+m=55
+n=132981840157609209217679405
+q=0
+q=0
+m=55
+m=132981840157609209217679405
+n=55
+q=2417851639229258349412352
+q=-132981840157609209217679360
+m=265963680315218418435358765
+m=55
+n=265963680315218418435358765
+q=0
+q=0
+m=55
+m=265963680315218418435358765
+n=55
+q=4835703278458516698824704
+q=-265963680315218418435358720
+m=531927360630436836870717485
+m=55
+n=531927360630436836870717485
+q=0
+q=0
+m=55
+m=531927360630436836870717485
+n=55
+q=9671406556917033397649408
+q=-531927360630436836870717440
+m=1063854721260873673741434925
+m=55
+n=1063854721260873673741434925
+q=0
+q=0
+m=55
+m=1063854721260873673741434925
+n=55
+q=19342813113834066795298816
+q=-1063854721260873673741434880
+m=2127709442521747347482869805
+m=55
+n=2127709442521747347482869805
+q=0
+q=0
+m=55
+m=2127709442521747347482869805
+n=55
+q=38685626227668133590597632
+q=-2127709442521747347482869760
+m=4255418885043494694965739565
+m=55
+n=4255418885043494694965739565
+q=0
+q=0
+m=55
+m=4255418885043494694965739565
+n=55
+q=77371252455336267181195264
+q=-4255418885043494694965739520
+m=8510837770086989389931479085
+m=55
+n=8510837770086989389931479085
+q=0
+q=0
+m=55
+m=8510837770086989389931479085
+n=55
+q=154742504910672534362390528
+q=-8510837770086989389931479040
+m=17021675540173978779862958125
+m=55
+n=17021675540173978779862958125
+q=0
+q=0
+m=55
+m=17021675540173978779862958125
+n=55
+q=309485009821345068724781056
+q=-17021675540173978779862958080
+m=34043351080347957559725916205
+m=55
+n=34043351080347957559725916205
+q=0
+q=0
+m=55
+m=34043351080347957559725916205
+n=55
+q=618970019642690137449562112
+q=-34043351080347957559725916160
+m=68086702160695915119451832365
+m=55
+n=68086702160695915119451832365
+q=0
+q=0
+m=55
+m=68086702160695915119451832365
+n=55
+q=1237940039285380274899124224
+q=-68086702160695915119451832320
+m=136173404321391830238903664685
+m=55
+n=136173404321391830238903664685
+q=0
+q=0
+m=55
+m=136173404321391830238903664685
+n=55
+q=2475880078570760549798248448
+q=-136173404321391830238903664640
+m=272346808642783660477807329325
+m=55
+n=272346808642783660477807329325
+q=0
+q=0
+m=55
+m=272346808642783660477807329325
+n=55
+q=4951760157141521099596496896
+q=-272346808642783660477807329280
+m=544693617285567320955614658605
+m=55
+n=544693617285567320955614658605
+q=0
+q=0
+m=55
+m=544693617285567320955614658605
+n=55
+q=9903520314283042199192993792
+q=-544693617285567320955614658560
+m=1089387234571134641911229317165
+m=55
+n=1089387234571134641911229317165
+q=0
+q=0
+m=55
+m=1089387234571134641911229317165
+n=55
+q=19807040628566084398385987584
+q=-1089387234571134641911229317120
+m=2178774469142269283822458634285
+m=55
+n=2178774469142269283822458634285
+q=0
+q=0
+m=55
+m=2178774469142269283822458634285
+n=55
+q=39614081257132168796771975168
+q=-2178774469142269283822458634240
+m=4357548938284538567644917268525
+m=55
+n=4357548938284538567644917268525
+q=0
+q=0
+m=55
+m=4357548938284538567644917268525
+n=55
+q=79228162514264337593543950336
+q=-4357548938284538567644917268480
+m=8715097876569077135289834537005
+m=55
+n=8715097876569077135289834537005
+q=0
+q=0
+m=55
+m=8715097876569077135289834537005
+n=55
+q=158456325028528675187087900672
+q=-8715097876569077135289834536960
+m=17430195753138154270579669073965
+m=55
+n=17430195753138154270579669073965
+q=0
+q=0
+m=55
+m=17430195753138154270579669073965
+n=55
+q=316912650057057350374175801344
+q=-17430195753138154270579669073920
+m=34860391506276308541159338147885
+m=55
+n=34860391506276308541159338147885
+q=0
+q=0
+m=55
+m=34860391506276308541159338147885
+n=55
+q=633825300114114700748351602688
+q=-34860391506276308541159338147840
+m=69720783012552617
