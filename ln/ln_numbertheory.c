@@ -57,17 +57,12 @@ ln ln_gcd(ln a,ln b)
 		n=q;
 	}
 
-printf("m=%s\n",ln2str(m));
-printf("n=%s\n",ln2str(n));
 	q=NULL;
 	r=NULL;
 	//欧几里得算法
-	while(ln_cmp_int(n,1)!=0)
+	while(ln_cmp_int(n,0)!=0)
 	{
-ln_info(m);
-ln_info(n);
 		q=ln_divide(m,n,0,trunc_res,newln);
-PUT_LINE;
 		if(q==NULL)
 		{
 			ln_free(&m);
@@ -75,7 +70,6 @@ PUT_LINE;
 			fprintf(stderr,"[%s %d] %s error,reason: ln_divide fail\b",__FILE__,__LINE__,__FUNCTION__);
 			return NULL;	
 		}
-printf("q=%s\n",ln2str(q));
 		if(ln_multiply(q,n,firstln)==NULL) //q=q*n
 		{
 			ln_free(&m);
@@ -84,7 +78,6 @@ printf("q=%s\n",ln2str(q));
 			fprintf(stderr,"[%s %d] %s error,reason: ln_divide fail\b",__FILE__,__LINE__,__FUNCTION__);
 			return NULL;	
 		}
-printf("q=%s\n",ln2str(q));
 		if(ln_sub(m,q,firstln)==NULL) 	//m=m-n*q
 		{
 			ln_free(&m);
@@ -94,13 +87,10 @@ printf("q=%s\n",ln2str(q));
 			return NULL;	
 
 		}
-printf("m=%s\n",ln2str(m));
 		//现在 n>m 交换
 		r=m;
 		m=n;
 		n=r;
-printf("m=%s\n",ln2str(m));
-printf("n=%s\n",ln2str(n));
 		ln_free(&q);
 	}
 	ln_free(&n);

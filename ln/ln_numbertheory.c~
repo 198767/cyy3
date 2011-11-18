@@ -62,10 +62,8 @@ printf("n=%s\n",ln2str(n));
 	q=NULL;
 	r=NULL;
 	//欧几里得算法
-	while(ln_cmp_int(n,1)!=0)
+	while(ln_cmp_int(n,0)!=0)
 	{
-ln_info(m);
-ln_info(n);
 		q=ln_divide(m,n,0,trunc_res,newln);
 		if(q==NULL)
 		{
