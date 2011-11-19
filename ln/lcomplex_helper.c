@@ -171,76 +171,6 @@ lcomplex lcomplex_copy(lcomplex a,lcomplex b)
 	}
 	return a;
 }
-
-/*
- * 作用:化简分数lcomplex
- * 参数:
- *	n:要化简的分数
- *	restype:结果存放方式
- * 返回值:
- * 	成功:返回最简分数
- * 	失败:NULL
- */
-lcomplex lcomplex_simplify(lcomplex n,res_type restype)
-{
-	lcomplex m;
-	ln gcd;
-	int sign;
-	//检测参数
-	if(lcomplex_checknull(n)!=0)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: lcomplex_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return NULL;	
-	}
-
-	if(restype==firstln)
-		m=n;
-	else
-	{
-		m=lcomplex_copy(NULL,n);
-		if(m==NULL)
-		{
-			fprintf(stderr,"[%s %d] %s error,reason: lcomplex_copy fail\n",__FILE__,__LINE__,__FUNCTION__);
-			return NULL;	
-		}
-	}
-
-	//调整分数指数
-	m->real->power-=m->imag->power;
-	if(m->real->power>=0)
-		m->imag->power=0;
-	else
-	{
-		m->imag->power=-m->real->power;
-		m->real->power=0;
-	}
-	if(m->real->sign==m->imag->sign)
-		sign=1;
-	else
-		sign=-1;
-	m->real->sign=1;
-	m->imag->sign=1;
-
-	//获取gcd
-	gcd=ln_gcd(m->real,m->imag);
-	if(gcd==NULL)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln_gcd fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return NULL;	
-	}
-	if(ln_divide(m->real,gcd,0,round_res,firstln)==NULL)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln_divide fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return NULL;	
-	}
-	if(ln_divide(m->imag,gcd,0,round_res,firstln)==NULL)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln_divide fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return NULL;	
-	}
-	m->real->sign=sign;
-	return m;
-}
 /*
  * 作用:打印分数lcomplex
  * 参数:
@@ -251,27 +181,51 @@ lcomplex lcomplex_simplify(lcomplex n,res_type restype)
 void lcomplex_output(lcomplex n)
 {
 	char *p;
+	int res;
 	//检测参数
 	if(lcomplex_checknull(n)!=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: lcomplex_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;	
 	}
-	p=ln2str(n->real);
-	if(!p)
+	//输出实部
+	res=ln_cmp_int(n->real,0);
+	if(res==-2)
 	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;			
+		fprintf(stderr,"[%s %d] %s error,reason: ln_cmp_int fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;	
 	}
-	printf("real: %s\n",p);
-	free(p);
-	p=ln2str(n->imag);
-	if(!p)
+
+	if(res !=0)
 	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;			
+		p=ln2str(n->real);
+		if(!p)
+		{
+			fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+			return;			
+		}
+		printf("%s",p);
+		free(p);
 	}
-	printf("imag: %s\n",p);
-	free(p);
+	//输出虚部
+	res=ln_cmp_int(n->imag,0);
+	if(res==-2)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln_cmp_int fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;	
+	}
+	if(res!=0)
+	{
+		p=ln2str(n->imag);
+		if(!p)
+		{
+			fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+			return;			
+		}
+		if(res>0)
+			printf("+");
+		printf("%si",p);
+		free(p);
+	}
 	return;
 }
