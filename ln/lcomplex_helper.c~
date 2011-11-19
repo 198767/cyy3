@@ -181,7 +181,7 @@ lcomplex lcomplex_copy(lcomplex a,lcomplex b)
 void lcomplex_output(lcomplex n)
 {
 	char *p;
-	int res,res2;
+	int res;
 	//检测参数
 	if(lcomplex_checknull(n)!=0)
 	{
@@ -208,13 +208,13 @@ void lcomplex_output(lcomplex n)
 		free(p);
 	}
 	//输出虚部
-	res2=ln_cmp_int(n->imag,0);
-	if(res2==-2)
+	res=ln_cmp_int(n->imag,0);
+	if(res==-2)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: ln_cmp_int fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;	
 	}
-	if(res2!=0)
+	if(res!=0)
 	{
 		p=ln2str(n->imag);
 		if(!p)
@@ -227,7 +227,5 @@ void lcomplex_output(lcomplex n)
 		printf("%si",p);
 		free(p);
 	}
-	if(res ==0 && res2==0) //实部和虚部都是0
-		printf("0");
 	return;
 }

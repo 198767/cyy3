@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
 	ln a=ln_init_str("0");
-	ln b=ln_init_str("0");
+	ln b=ln_init_str("-2");
 	ln c=lcomplex_creat(a,b,deepcopy);
 	lcomplex_output(c);
 	return -1;

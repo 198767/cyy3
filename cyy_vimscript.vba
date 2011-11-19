@@ -202,7 +202,7 @@ endfunction
 
 
 plugin/cyy_vimscript/settings.vim	[[[1
-37
+39
 "备份文件
 set backup
 "使用文件类型插件
@@ -240,6 +240,8 @@ map <F12> :echo "尚未绑定按键"<CR>
 
 "去掉X命令
 cmap X x
+"关键字搜索当前目录
+set cpt+=k*
 plugin/cyy_vimscript/open_relate_src.vim	[[[1
 77
 """""""""""""""""""""""""""""""""""""""""""""""""""
