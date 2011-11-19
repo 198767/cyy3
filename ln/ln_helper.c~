@@ -847,15 +847,12 @@ ln ln_fix(ln n,int precision,divide_mode mode)
 		fprintf(stderr,"[%s %d] %s error,reason: precision error\n",__FILE__,__LINE__,__FUNCTION__);
 		return NULL;
 	}
-puts("+++++++++++++++++++++");
-ln_info(n);
 	//去除前置0
 	ln_stripleadingzero(n);
-ln_info(n);
 	//去除后置0
 	ln_adjustpower(n,ln_endingzeronum(n));
-ln_info(n);
-puts("+++++++++++++++++++++");
+	//由于上一个函数可能导致前置0,再次去除
+	ln_stripleadingzero(n);
 
 	//获取最低节点的小数点位数
 	pointnum=ln_pointnum(n,n->lsd);
