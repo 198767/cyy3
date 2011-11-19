@@ -142,7 +142,7 @@ lcomplex lcomplex_copy(lcomplex a,lcomplex b)
 	}
 	if(!a)
 	{
-		a=lcomplex_creat(b->real,b->imag,deepcopy); //深复制创建分数
+		a=lcomplex_creat(b->real,b->imag,deepcopy); //深复制创建复数
 		if(a==NULL)
 		{
 			fprintf(stderr,"[%s %d] %s error,reason: lcomplex_creat fail\n",__FILE__,__LINE__,__FUNCTION__);
@@ -171,63 +171,95 @@ lcomplex lcomplex_copy(lcomplex a,lcomplex b)
 	}
 	return a;
 }
+
 /*
- * 作用:打印分数lcomplex
+ * 作用:把lcomplex转换为字符串,形式为[real+imag*i],但如果复数是0,直接返回0
  * 参数:
- *	n:要输出的分数
+ *	n:要处理的lcomplex
+ * 返回值:
+ * 	成功:返回lcomplex的字符串表示(需要用free释放)
+ * 	失败:NULL
+ */
+char* lcomplex2str(lcomplex n)
+{
+	char *p,*q,*str;
+	//检测参数
+	if(lcomplex_checknull(n)!=0)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: lcomplex_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return NULL;	
+	}
+	p=ln2str(n->real);
+	if(!p)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return NULL;			
+	}
+	q=ln2str(n->imag);
+	if(!q)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		free(p);
+		return NULL;			
+	}
+	if(p[0]=='0' && p[1]=='\0' && q[0]=='0' && q[1]=='\0') //如果实部和虚部都是0,直接返回0
+	{
+		free(q);
+		return p;
+	}
+	str=malloc(strlen(p)+strlen(q)+5);
+	if(!str)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		free(p);
+		free(q);
+		return NULL;			
+	}
+	if(q[0]=='0' && q[1]=='\0') //如果虚部为0
+	{
+		free(str);
+		free(q);
+		return p;
+	}
+	if(p[0]=='0' && p[1]=='\0') //如果实部为0
+	{
+		sprintf(str,"%si",q);
+		free(p);
+		free(q);
+		return str;
+	}
+	if(n->imag->sign==1)
+		sprintf(str,"%s+%si",p,q);
+	else
+		sprintf(str,"%s%si",p,q);
+	free(p);
+	free(q);
+	return str;
+}
+
+/*
+ * 作用:打印复数lcomplex
+ * 参数:
+ *	n:要输出的复数
  * 返回值:
  * 	无
  */
 void lcomplex_output(lcomplex n)
 {
 	char *p;
-	int res,res2;
 	//检测参数
 	if(lcomplex_checknull(n)!=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason: lcomplex_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;	
 	}
-	//输出实部
-	res=ln_cmp_int(n->real,0);
-	if(res==-2)
+	p=lcomplex2str(n);
+	if(!p)
 	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln_cmp_int fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
+		fprintf(stderr,"[%s %d] %s error,reason: lcomplex2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;			
 	}
-
-	if(res !=0)
-	{
-		p=ln2str(n->real);
-		if(!p)
-		{
-			fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
-			return;			
-		}
-		printf("%s",p);
-		free(p);
-	}
-	//输出虚部
-	res2=ln_cmp_int(n->imag,0);
-	if(res2==-2)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln_cmp_int fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;	
-	}
-	if(res2!=0)
-	{
-		p=ln2str(n->imag);
-		if(!p)
-		{
-			fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
-			return;			
-		}
-		if(res>0)
-			printf("+");
-		printf("%si",p);
-		free(p);
-	}
-	if(res ==0 && res2==0) //实部和虚部都是0
-		printf("0");
-	return;
+	puts(p);
+	free(p);
+	return;			
 }

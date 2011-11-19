@@ -145,7 +145,7 @@ int ln_checknull(ln n)
 
 	if(n->sign !=-1 && n->sign !=0 && n->sign !=1) //非法符号
 	{
-		fprintf(stderr,"[%s %d] %s error,reason:invalid sign\n",__FILE__,__LINE__,__FUNCTION__);
+		fprintf(stderr,"[%s %d] %s error,reason:invalid sign [%d]\n",__FILE__,__LINE__,__FUNCTION__,n->sign);
 		return -1;	
 	}
 
@@ -1433,6 +1433,12 @@ char* ln2str(ln n)
 void ln_output(ln n)
 {
 	char* p;
+	//检测参数
+	if(ln_checknull(n)!=0)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return;	
+	}
 	p=ln2str(n);
 	if(!p)
 	{

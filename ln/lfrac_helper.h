@@ -1,5 +1,5 @@
 /*
- *	该文件里面包含ln构成的分数的基本操作函数
+ *	该库里面包含lfrac的构造及释放的函数，以及转换函数等辅助函数
  */
 #ifndef LN_FRAC_H
 #define LN_FRAC_H
@@ -15,8 +15,9 @@
 
 struct _lfrac
 {
-	ln ntor;	//分子
-	ln dtor;	//分母
+	ln ntor;	//分子 取绝对值
+	ln dtor;	//分母	取绝对值 
+	int sign; 	//1-正数 -1-负数
 };
 typedef struct _lfrac* lfrac;
 
@@ -70,6 +71,15 @@ lfrac lfrac_copy(lfrac a,lfrac b);
  * 	失败:NULL
  */
 lfrac lfrac_simplify(lfrac n,res_type restype);
+/*
+ * 作用:把lfrac转换为字符串,形式为[分子/分母]
+ * 参数:
+ *	n:要处理的lfrac
+ * 返回值:
+ * 	成功:返回lfrac的字符串表示(需要用free释放)
+ * 	失败:NULL
+ */
+char* lfrac2str(lfrac n);
 /*
  * 作用:打印分数lfrac
  * 参数:

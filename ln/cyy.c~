@@ -1,27 +1,15 @@
 #include<stdio.h>
 #include<limits.h>
-#include "lfrac_helper.h"
 #include "ln_helper.h"
 #include "ln_arithmetic.h"
+#include "lfrac_helper.h"
 int main(int argc, char** argv)
 {
-	ln a=ln_init_str("0");
-	ln b=ln_init_str("-2");
-	ln c=lcomplex_creat(a,b,deepcopy);
-	lcomplex_output(c);
+	ln a=ln_init_str("2");
+	ln b=ln_init_str("-1");
+	lfrac c=lfrac_creat(a,b,copy);
+	lfrac_output(c);
+	lfrac d=lfrac_copy(NULL,c);
+	lfrac_output(d);
 	return -1;
-	int i;
-	for(i=0;i<1000;i++)
-	{
-		ln_add(b,a,firstln);
-		c=b;
-		b=a;
-		a=c;
-	}
-	
-	c=ln_divide(a,b,100,trunc_res,newln);
-	ln_output(c);
-	//	ln c=ln_gcd(a,b);
-	//	ln c=ln_divide(a,b,0,trunc_res,newln);
-	return 0;
 }

@@ -1,5 +1,5 @@
 /*
- *	该文件里面包含ln构成的分数的基本操作函数
+ *	该库里面包含lcomplex的构造及释放的函数，以及转换函数等辅助函数
  */
 #ifndef LN_FRAC_H
 #define LN_FRAC_H
@@ -59,6 +59,15 @@ void lcomplex_free(lcomplex* n);
  * 	失败:返回NULL
  */
 lcomplex lcomplex_copy(lcomplex a,lcomplex b);
+/*
+ * 作用:把lcomplex转换为字符串,形式为[real+imag*i],但如果复数是0,直接返回0
+ * 参数:
+ *	n:要处理的lcomplex
+ * 返回值:
+ * 	成功:返回lcomplex的字符串表示(需要用free释放)
+ * 	失败:NULL
+ */
+char* lcomplex2str(lcomplex n);
 /*
  * 作用:打印lcomplex
  * 参数:

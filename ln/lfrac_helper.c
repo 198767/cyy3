@@ -4,6 +4,7 @@
 #include "lfrac_helper.h"
 /*
  * 作用:ntor和dtor作为分子和分母创建lfrac
+ * 注意:如果是浅复制,则在此之后只应该在lfrac引用那些ln,否则会出错
  * 参数:
  * 	ntor:分子
  * 	dtor:分母
@@ -31,6 +32,12 @@ lfrac lfrac_creat(ln ntor,ln dtor,res_type restype)
 		fprintf(stderr,"[%s %d] %s error,reason: invalid restype\n",__FILE__,__LINE__,__FUNCTION__);
 		return NULL;	
 	}
+	//分母不能为0
+	if(ln_cmp_int(dtor,0)==0)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason:dtor is 0\n",__FILE__,__LINE__,__FUNCTION__);
+		return NULL;	
+	}
 
 	//去除前置0
 	ln_stripleadingzero(ntor);
@@ -45,13 +52,13 @@ lfrac lfrac_creat(ln ntor,ln dtor,res_type restype)
 	}
 	if(restype==deepcopy) //深度复制
 	{
-		n->ntor=ln_copy(n->ntor,ntor);
+		n->ntor=ln_copy(NULL,ntor);
 		if(n->ntor==NULL)
 		{
 			fprintf(stderr,"[%s %d] %s error,reason: ln_copy fail\n",__FILE__,__LINE__,__FUNCTION__);
 			return NULL;			
 		}
-		n->dtor=ln_copy(n->dtor,dtor);
+		n->dtor=ln_copy(NULL,dtor);
 		if(n->dtor==NULL)
 		{
 			fprintf(stderr,"[%s %d] %s error,reason: ln_copy fail\n",__FILE__,__LINE__,__FUNCTION__);
@@ -62,6 +69,12 @@ lfrac lfrac_creat(ln ntor,ln dtor,res_type restype)
 	{	n->ntor=ntor;
 		n->dtor=dtor;
 	}
+	if(n->ntor->sign == n->dtor->sign)
+		n->sign=1;
+	else
+		n->sign=-1;
+	n->ntor->sign=1;
+	n->dtor->sign=1;
 	return n;
 }
 
@@ -90,6 +103,17 @@ int lfrac_checknull(lfrac n)
 	if(ln_checknull(n->dtor) !=0)
 	{
 		fprintf(stderr,"[%s %d] %s error,reason:ln_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return -1;	
+	}
+	//分子分母必须是正数,分数的符号在sign单独设置
+	if(n->ntor->sign!=1)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason:ntor <=0\n",__FILE__,__LINE__,__FUNCTION__);
+		return -1;	
+	}
+	if(n->dtor->sign!=1)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason:dtor <=0\n",__FILE__,__LINE__,__FUNCTION__);
 		return -1;	
 	}
 	return 0;
@@ -169,6 +193,7 @@ lfrac lfrac_copy(lfrac a,lfrac b)
 		}
 
 	}
+	a->sign=b->sign;
 	return a;
 }
 
@@ -242,6 +267,52 @@ lfrac lfrac_simplify(lfrac n,res_type restype)
 	return m;
 }
 /*
+ * 作用:把lfrac转换为字符串,形式为[分子/分母],但如果分子是0,直接返回0
+ * 参数:
+ *	n:要处理的lfrac
+ * 返回值:
+ * 	成功:返回lfrac的字符串表示(需要用free释放)
+ * 	失败:NULL
+ */
+char* lfrac2str(lfrac n)
+{
+	char *p,*q,*str;
+	//检测参数
+	if(lfrac_checknull(n)!=0)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: lfrac_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return NULL;	
+	}
+	p=ln2str(n->ntor);
+	if(!p)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		return NULL;			
+	}
+	if(p[0]=='0' && p[1]=='\0') //如果分子是0,直接返回0
+		return p;
+
+	q=ln2str(n->dtor);
+	if(!q)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		free(p);
+		return NULL;			
+	}
+	str=malloc(strlen(p)+strlen(q)+5);
+	if(!str)
+	{
+		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		free(p);
+		free(q);
+		return NULL;			
+	}
+	sprintf(str,"%s%s/%s",n->sign==1?"":"-",p,q);
+	free(p);
+	free(q);
+	return str;
+}
+/*
  * 作用:打印分数lfrac
  * 参数:
  *	n:要输出的分数
@@ -257,21 +328,13 @@ void lfrac_output(lfrac n)
 		fprintf(stderr,"[%s %d] %s error,reason: lfrac_checknull fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;	
 	}
-	p=ln2str(n->ntor);
+	p=lfrac2str(n);
 	if(!p)
 	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
+		fprintf(stderr,"[%s %d] %s error,reason: lfrac2str fail\n",__FILE__,__LINE__,__FUNCTION__);
 		return;			
 	}
-	printf("ntor: %s\n",p);
+	puts(p);
 	free(p);
-	p=ln2str(n->dtor);
-	if(!p)
-	{
-		fprintf(stderr,"[%s %d] %s error,reason: ln2str fail\n",__FILE__,__LINE__,__FUNCTION__);
-		return;			
-	}
-	printf("dtor: %s\n",p);
-	free(p);
-	return;
+	return;			
 }
