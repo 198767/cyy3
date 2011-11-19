@@ -202,7 +202,7 @@ endfunction
 
 
 plugin/cyy_vimscript/settings.vim	[[[1
-27
+37
 "备份文件
 set backup
 "使用文件类型插件
@@ -215,6 +215,16 @@ set fenc=utf8
 set enc=utf8
 "设置写入文件编码
 set fencs=utf8
+
+if has("gui_win32")
+	"去除gvim菜单乱码
+	source $VIMRUNTIME/delmenu.vim
+	source $VIMRUNTIME/menu.vim
+	"去除gvim消息乱码
+	language messages zh_CN.utf-8
+endif
+
+
 "递增查询
 set incsearch
 "设置页号
