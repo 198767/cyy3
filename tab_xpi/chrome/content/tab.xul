@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://cyy_tab/locale/tab.dtd" >
+	<overlay id="cyy_tab" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<menupopup id="tabContextMenu">
+	      <menuitem id="context_closeRightTabs" insertafter="context_closeOtherTabs" label="&closeRightTabs.label;" oncommand="cyy_tab_closeRightTabs()"/>
+	</menupopup>
+	<script type="application/x-javascript" src="chrome://cyy_tab/content/tab.js" />
+
+</overlay>

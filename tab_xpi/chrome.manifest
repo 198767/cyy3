@@ -1,0 +1,4 @@
+content   cyy_tab  chrome/content/
+locale    cyy_tab en-US  chrome/locale/en-US/
+locale    cyy_tab zh-CN  chrome/locale/zh-CN/
+overlay chrome://browser/content/browser.xul chrome://cyy_tab/content/tab.xul
