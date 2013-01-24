@@ -9,7 +9,7 @@ char* add_nums(const char* num1,const char* base1,const char* num2,const char* b
 	int base_gcd;
 	int i,test_res;
 	int base[2];
-	lN numerator[3],denominator[3];
+	ln numerator[3],denominator[3];
 	vector digits;
 
 	//test bases
@@ -65,15 +65,15 @@ char* add_nums(const char* num1,const char* base1,const char* num2,const char* b
 		free(q);
 	}
 	//compute the fraction
-	denominator[2]=multiply_lns(denominator[0],denominator[1],newln);
-	numerator[0]=multiply_lns(numerator[0],denominator[1],firstln);
-	numerator[1]=multiply_lns(numerator[1],denominator[0],firstln);
-	numerator[2]=add_lns(numerator[0],numerator[1],newln);
+	denominator[2]=ln_multiply(denominator[0],denominator[1],newln);
+	numerator[0]=ln_multiply(numerator[0],denominator[1],firstln);
+	numerator[1]=ln_multiply(numerator[1],denominator[0],firstln);
+	numerator[2]=ln_add(numerator[0],numerator[1],newln);
 	//free unused numbers
 	for(i=0;i<2;i++)
 	{
-		free_ln(numerator[i]);
-		free_ln(denominator[i]);
+		ln_free(&(numerator[i]));
+		ln_free(&(denominator[i]));
 	}
 
 
@@ -89,8 +89,8 @@ char* add_nums(const char* num1,const char* base1,const char* num2,const char* b
 		while(ln_divideable_num(numerator[2],base_gcd)==1 && ln_divideable_num(denominator[2],base_gcd)==1)
 		{
 
-			ln_divide_num(numerator[2],base_gcd,0,trunc,firstln);
-			ln_divide_num(denominator[2],base_gcd,0,trunc,firstln);
+			ln_divide_int(numerator[2],base_gcd,0,trunc_res,firstln);
+			ln_divide_int(denominator[2],base_gcd,0,trunc_res,firstln);
 		}
 	}
 
@@ -104,8 +104,8 @@ char* add_nums(const char* num1,const char* base1,const char* num2,const char* b
 		q=(char*)malloc(strlen(p)+4);
 		if(!q)
 		{
-			free_ln(numerator[2]);
-			free_ln(denominator[2]);
+			ln_free(&(numerator[2]));
+			ln_free(&(denominator[2]));
 			printf("Error: coverting fraction to decimal number failed at line %d",__LINE__);
 			return NULL;
 		}
@@ -122,8 +122,8 @@ char* add_nums(const char* num1,const char* base1,const char* num2,const char* b
 	digits=get_decimal_digit(numerator[2],denominator[2]);
 	if(!digits)
 	{
-		free_ln(numerator[2]);
-		free_ln(denominator[2]);
+		ln_free(&(numerator[2]));
+		ln_free(&(denominator[2]));
 		printf("Error: coverting fraction to decimal number failed at line %d",__LINE__);
 		return NULL;
 	}
@@ -131,8 +131,8 @@ char* add_nums(const char* num1,const char* base1,const char* num2,const char* b
 	p=get_decimalstr(digits,denominator[2]);
 	if(!p)
 	{
-		free_ln(numerator[2]);
-		free_ln(denominator[2]);
+		ln_free(&(numerator[2]));
+		ln_free(&(denominator[2]));
 		free_digit(digits);
 		printf("Error: coverting fraction to decimal number failed at line %d",__LINE__);
 		return NULL;
@@ -224,18 +224,18 @@ int test_num(const char* n,int base)
 
 
 //get the denominator part of the num in base b and converted to base 10
-lN get_denominator(const char* num,int b)
+ln get_denominator(const char* num,int b)
 {
 	const char*p;
-	lN denominator;
-	denominator=init_ln(1);
+	ln denominator;
+	denominator=ln_init(1);
 	p=strstr(num,".");
 	if(p) //has fractional part
 	{
 		p++;
 		while(*p)
 		{
-			ln_multiply_num(denominator,b,firstln);
+			ln_multiply_int(denominator,b,firstln);
 			p++;
 		}
 	}
@@ -243,23 +243,23 @@ lN get_denominator(const char* num,int b)
 }
 
 //get the numerator part of the num in base b and converted to base 10
-lN get_numerator(const char* num,int b)
+ln get_numerator(const char* num,int b)
 {
 	const char*p;
-	lN numerator;
-	lN base;
-	lN add_digit;
-	numerator=init_ln(0);
-	base=init_ln(1);
+	ln numerator;
+	ln base;
+	ln add_digit;
+	numerator=ln_init(0);
+	base=ln_init(1);
 	p=num+strlen(num)-1;
 	while(p>=num)
 	{
 		if(*p !='.')
 		{
-			add_digit=ln_multiply_num(base,*p-'0',newln);
-			add_lns(numerator,add_digit,firstln);
-			free_ln(add_digit);
-			ln_multiply_num(base,b,firstln);
+			add_digit=ln_multiply_int(base,*p-'0',newln);
+			ln_add(numerator,add_digit,firstln);
+			ln_free(&add_digit);
+			ln_multiply_int(base,b,firstln);
 		}
 		p--;
 	}
@@ -269,24 +269,24 @@ lN get_numerator(const char* num,int b)
 /*
  * get the decimal digits
  */
-vector get_decimal_digit(const lN numerator,const lN denominator)
+vector get_decimal_digit(const ln numerator,const ln denominator)
 {
-	lN a,b,c;
-	lN i,j,k,l,temp;
+	ln a,b,c;
+	ln i,j,k,l,temp;
 	int power;
 	vector digits;
 	digits=vect_create_pointer();
 	if(!digits)
 		return NULL;
 
-	a=copy_lns(NULL,numerator);
-	b=copy_lns(NULL,denominator);
+	a=ln_copy(NULL,numerator);
+	b=ln_copy(NULL,denominator);
 
 	//get the digits
 	if(ln_cmp(a,b)<0)
 	{
 		vect_pushelm(digits,a);
-		free_ln(b);
+		ln_free(&b);
 		return digits;
 	}
 	
@@ -296,11 +296,11 @@ vector get_decimal_digit(const lN numerator,const lN denominator)
 	c=ln_exp_int(b,power,newln);
 	while(ln_cmp(c,a)<=0)
 	{
-		free_ln(c);
+		ln_free(c);
 		power++;
 		c=ln_exp_int(b,power,newln);
 	}
-	free_ln(c);
+	ln_free(c);
 	power--;
 	while(ln_cmp(a,b)>=0)
 	{
@@ -311,64 +311,64 @@ vector get_decimal_digit(const lN numerator,const lN denominator)
 
 		while(1)
 		{
-			k=add_lns(i,j,newln); //k=(i+j)/2
+			k=ln_add(i,j,newln); //k=(i+j)/2
 			k=ln_divide_num(k,2,0,trunc,firstln);
-			temp=multiply_lns(k,c,newln);
+			temp=ln_multiply(k,c,newln);
 
 			if(ln_cmp(temp,a)>0)  //k*c>a
 			{
-				free_ln(j);
+				ln_free(j);
 				j=ln_add_num(k,-1,newln); //j=k-1
-				free_ln(k);
-				free_ln(temp);
+				ln_free(k);
+				ln_free(temp);
 			}
 			else if(ln_cmp(temp,a)==0) //k*c=a
 			{
-				free_ln(i);
-				free_ln(j);
-				free_ln(c);
+				ln_free(i);
+				ln_free(j);
+				ln_free(c);
 				break;
 			}
 			else //k*c<a
 			{
 				l=ln_add_num(k,1,newln);
-				free_ln(temp);
-				temp=multiply_lns(l,c,newln);
+				ln_free(temp);
+				temp=ln_multiply(l,c,newln);
 				if(ln_cmp(temp,a)==0) //(k+1)*c=a
 				{
-					copy_lns(&k,l);
-					free_ln(i);
-					free_ln(j);
-					free_ln(c);
-					free_ln(l);
+					ln_copy(&k,l);
+					ln_free(i);
+					ln_free(j);
+					ln_free(c);
+					ln_free(l);
 					break;
 				}
 				else if(ln_cmp(temp,a)>0) //(k+1)*c>a
 				{
-					free_ln(temp);
-					temp=multiply_lns(k,c,newln);
-					free_ln(i);
-					free_ln(j);
-					free_ln(l);
-					free_ln(c);
+					ln_free(temp);
+					temp=ln_multiply(k,c,newln);
+					ln_free(i);
+					ln_free(j);
+					ln_free(l);
+					ln_free(c);
 					break;
 				}
 				else //(k+1) <a
 				{
-					free_ln(i);
+					ln_free(i);
 					i=ln_add_num(k,2,newln); //i=k+2
-					free_ln(k);
-					free_ln(temp);
+					ln_free(k);
+					ln_free(temp);
 				}
 			}
 		}
 		vect_pushelm(digits,k);
 		minus_lns(a,temp,firstln);
-		free_ln(temp);
+		ln_free(temp);
 		power--;
 	}
 	vect_pushelm(digits,a);
-	free_ln(b);
+	ln_free(b);
 	return digits;
 }
 
@@ -376,11 +376,11 @@ vector get_decimal_digit(const lN numerator,const lN denominator)
  * get the addtion result with the <decimal base> form 
  * but if the base is too large (>16) and hard to find  letters to present the digits(maybe >16), then use the <digit1*base1^power1+digit2*base2^power2.....> form
  */
-char* get_decimalstr(const vector digits,const lN base)
+char* get_decimalstr(const vector digits,const ln base)
 {
 	int i;
 	char *s1,*s2;
-	lN digit;
+	ln digit;
 	vector decimal;
 	//produce the decimal string
 	decimal=vect_create_str("");
@@ -390,10 +390,10 @@ char* get_decimalstr(const vector digits,const lN base)
 	s2=ln2str(base);
 	for(i=0;i<vect_getlength(digits);i++)
 	{
-		digit=*((lN *)vect_getelmat(digits,i));
-		if(ln_cmp_num(base,16)>0)
+		digit=*((ln *)vect_getelmat(digits,i));
+		if(ln_cmp_int(base,16)>0)
 		{
-			if(ln_cmp_num(digit,0)>0)
+			if(ln_cmp_int(digit,0)>0)
 			{
 				s1=ln2str(digit);
 				if(i>0)
@@ -425,7 +425,7 @@ char* get_decimalstr(const vector digits,const lN base)
 	}
 	
 	//append the base
-	if(ln_cmp_num(base,16)<=0)
+	if(ln_cmp_int(base,16)<=0)
 		vect_strcat(decimal," %s",s2);
 	free(s2);
 
@@ -437,11 +437,11 @@ char* get_decimalstr(const vector digits,const lN base)
 void free_digit(vector digits)
 {
 	int i;
-	lN p;
+	ln p;
 	for(i=0;i<vect_getlength(digits);i++)
 	{
-		p=*((lN *)vect_getelmat(digits,i));
-		free_ln(p);
+		p=*((ln *)vect_getelmat(digits,i));
+		ln_free(*p);
 	}
 	vect_free(digits);
 	return;
