@@ -7,10 +7,10 @@
 int main()
 {
 	int i,b;
-	largeNum sum=init_largenum(5);
-	largeNum k=NULL;
-	largeNum temp=NULL;
-	largeNum j=init_largenum(1);
+	ln sum=ln_init(5);
+	ln k=NULL;
+	ln temp=NULL;
+	ln j=ln_init(1);
 	for(i=3;i<=1000;i++)
 	{
 		if(i%10==0)
@@ -19,10 +19,10 @@ int main()
 		j->highestdigit=j->lowestdigit;
 		b=i;
 		if(b%2==0)
-			k=init_largenum(1);
+			k=ln_init(1);
 		else
 		{
-			k=init_largenum(i);
+			k=ln_init(i);
 			b--;	
 		}
 		while(1)

@@ -7,7 +7,7 @@ int main()
 	int n=1;
 	int count=0;
 	int flag=0;
-	largeNum num=NULL;
+	ln num=NULL;
 	while(1)
 	{
 		flag=0;

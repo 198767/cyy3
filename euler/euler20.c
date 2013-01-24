@@ -1,16 +1,13 @@
-#include "largenum.h"
 #include <stdio.h>
 #include <limits.h>
+#include "ln_helper.h"
 int main()
 {
 	int i,sum;
-	largeNum num=init_largenum(1);
+	ln num=ln_init(1);
 	for(i=2;i<=100;i++)
-	{
-		largenum_multiply_int(num,i,firstnumber);
-	}
-	show_largenum(num);
-	printf("\n");
+		ln_multiply_int(num,i,firstln);
+	ln_output(num);
 	sum=get_digitsum(num);
 	printf("%d",sum);
 	free_largenum(num);

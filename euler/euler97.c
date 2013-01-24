@@ -1,21 +1,18 @@
 #include <stdio.h>
-#include "largenum.h"
-/*
- *  跟euler48类似
- */
+#include "ln.h"
 
 int main()
 {
 	int i,b;
-	largeNum sum=init_largenum(1);
-	largeNum k=NULL;
-	largeNum temp=NULL;
-	largeNum j=init_largenum(1);
+	ln sum=ln_init(1);
+	ln k=NULL;
+	ln temp=NULL;
+	ln j=ln_init(1);
 	i=2;
 	b=7830457;
 	j->lowestdigit->digit=i;
 	j->highestdigit=j->lowestdigit;
-	k=init_largenum(i);
+	k=ln_init(i);
 	b--;	
 	while(1)
 	{
